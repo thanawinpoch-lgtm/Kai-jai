@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ใจ–กาย · สมุดบันทึกสุขภาพกายและใจ</title>
+<meta name="description" content="ต้นแบบเพื่อการศึกษา: บันทึกการนอน อารมณ์ และความเครียดรายวัน แล้วดูความสัมพันธ์ระหว่างกายกับใจ ข้อมูลเก็บในเครื่องของคุณเท่านั้น">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF2FA;--ink:#1B2340;--mute:#586282;--line:#CCD5EA;--panel:#E3E9F7;--card:#FFFFFF;--sleep:#4254A8;--mood:#D98A12;--accent:#2E3E8F;--onaccent:#FFFFFF;--warn:#FBE9E7;--warnink:#7A2E22;--f:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1C21;--ink:#E4EEF1;--mute:#93A9B1;--line:#2B4048;--panel:#17272D;--sleep:#98A6EE;--mood:#F0B35C;--accent:#E4EEF1;--onaccent:#0F1C21;--warn:#3A1F1B;--warnink:#F3C1B8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1C21;--ink:#E4EEF1;--mute:#93A9B1;--line:#2B4048;--panel:#17272D;--sleep:#98A6EE;--mood:#F0B35C;--accent:#E4EEF1;--onaccent:#0F1C21;--warn:#3A1F1B;--warnink:#F3C1B8;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--f)}
+main{max-width:560px;margin:0 auto;padding:20px 18px 48px}
+h1{font-size:2.3rem;font-weight:600;letter-spacing:-.01em;margin:8px 0 4px;line-height:1.2}
+h2{font-size:1.15rem;font-weight:600;margin:38px 0 10px}
+.lead,.mute{color:var(--mute);margin:0}
+.panel{background:var(--panel);border-radius:14px;padding:16px 16px 18px;margin-top:18px}
+.lbl{display:block;font-weight:500;margin:16px 0 6px}
+.lbl:first-child{margin-top:0}
+.lbl span{color:var(--mute);font-weight:400}
+input[type=range]{width:100%;accent-color:var(--sleep)}
+input[type=date],input[type=number]{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;box-sizing:border-box}
+.seg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.seg button{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 2px;cursor:pointer;line-height:1.25}
+.seg button small{display:block;color:var(--mute);font-size:.72rem}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--onaccent);border-color:var(--accent)}
+.seg button[aria-pressed=true] small{color:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{font:inherit;font-weight:600;background:var(--accent);color:var(--onaccent);border:0;border-radius:10px;padding:12px 16px;width:100%;margin-top:18px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-top:8px}
+:focus-visible{outline:3px solid var(--mood);outline-offset:2px}
+#status{min-height:1.6em;margin:10px 0 0;color:var(--mute)}
+.care{background:var(--warn);color:var(--warnink);border-radius:12px;padding:14px 16px;margin-top:18px}
+.care p{margin:0}
+.chart{overflow-x:auto}
+svg{width:100%;height:auto;display:block}
+.ax{fill:var(--mute);font:11px var(--f)}
+.grid{stroke:var(--line);stroke-width:1}
+.bar{fill:var(--sleep)}
+.ln{fill:none;stroke:var(--mood);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.dot{fill:var(--mood);stroke:var(--bg);stroke-width:2}
+.legend{display:flex;gap:18px;color:var(--mute);font-size:.9rem;margin:6px 0 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.insight{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:14px 0}
+.insight b{font-weight:600}
+textarea{width:100%;box-sizing:border-box;min-height:120px;font:12px/1.5 ui-monospace,Menlo,monospace;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px}
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:500}
+footer{margin-top:40px;color:var(--mute);font-size:.9rem}
+.typing{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
+.typing summary{font-weight:500}
+.typing .lbl input{margin-right:8px}
+#tyBox{font:16px/1.5 var(--f);min-height:90px;margin-top:8px}
+#tyBox:disabled{opacity:.5}
+.proto{display:inline-block;margin-top:10px;padding:4px 12px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--mute)}
+h1{font-size:2.8rem;margin:6px 0 0}
+.ecg{max-width:300px;margin:0 0 6px}
+.ecg path{fill:none;stroke:var(--mood);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:700;animation:draw 1.6s ease-out 1}
+@keyframes draw{from{stroke-dashoffset:700}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.ecg path{animation:none}}
+.panel,.sig,.drawer{background:var(--card,var(--panel));border:1px solid var(--line);border-radius:18px}
+.drawer{padding:4px 16px;margin-top:10px}
+.drawer summary{padding:12px 0}
+.drawer details{border-top:1px solid var(--line)}
+.drawer details summary{padding:10px 0}
+.drawer p{margin:0 0 12px}
+.seg button b{display:block;font-size:1.45rem;font-weight:400;line-height:1.3}
+.sig{padding:16px;margin-top:18px}
+.sig p{margin:6px 0 0}
+.sig ul{margin:8px 0 0;padding-left:20px}
+.meter{display:flex;gap:4px;margin-bottom:12px}
+.meter i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.lv1 .meter i:nth-child(-n+1){background:var(--sleep)}
+.lv2 .meter i:nth-child(-n+2){background:var(--mood)}
+.lv3 .meter i{background:var(--warnink)}
+</style>
+</head>
+<body>
+<main>
+  <noscript><p>หน้านี้ต้องเปิด JavaScript จึงจะใช้งานได้</p></noscript>
+  <div class="hero"><h1>ใจ–กาย</h1><svg class="ecg" viewBox="0 0 300 60" aria-hidden="true"><path d="M0 32H80l8 0 8-24 12 46 8-22h54l8-6 8 6h114"/></svg></div>
+  <p class="lead">บันทึกการนอนและอารมณ์วันละ 1 นาที แล้วดูว่าร่างกายกับใจของคุณเกี่ยวข้องกันอย่างไร</p>
+  <span class="proto">ต้นแบบเพื่อการศึกษา ไม่ใช่เครื่องมือทางการแพทย์</span>
+
+  <div id="care" class="care" hidden>
+    <p>ช่วงนี้อารมณ์ของคุณต่ำต่อเนื่อง ลองคุยกับคนที่ไว้ใจ หรือโทรสายด่วนสุขภาพจิต 1323 ได้เลย แอพนี้ไม่ใช่เครื่องมือวินิจฉัย</p>
+  </div>
+
+  <section class="panel" aria-labelledby="h-in">
+    <h2 id="h-in" style="margin-top:0">เช็กอินวันนี้</h2>
+    <label class="lbl" for="date">วันที่</label>
+    <input type="date" id="date">
+
+    <label class="lbl" for="sleep">เมื่อคืนนอนกี่ชั่วโมง <span id="sleepOut"></span></label>
+    <input type="range" id="sleep" min="0" max="12" step="0.5" value="7">
+
+    <div class="lbl" id="l-mood">อารมณ์วันนี้</div>
+    <div class="seg" id="mood" role="group" aria-labelledby="l-mood"></div>
+
+    <div class="lbl" id="l-stress">ความเครียดวันนี้</div>
+    <div class="seg" id="stress" role="group" aria-labelledby="l-stress"></div>
+
+    <div class="row">
+      <div><label class="lbl" for="rhr">ชีพจรขณะพัก <span>(ครั้ง/นาที, ไม่บังคับ)</span></label><input type="number" id="rhr" min="30" max="200" inputmode="numeric"></div>
+      <div><label class="lbl" for="hrv">HRV <span>(RMSSD มิลลิวินาที, ไม่บังคับ)</span></label><input type="number" id="hrv" min="1" max="300" inputmode="numeric"></div>
+    </div>
+    <details class="typing">
+      <summary>⌨️ ทดลอง: วิเคราะห์จังหวะการพิมพ์ (ไม่บังคับ)</summary>
+      <p class="mute">แอพจะจับเวลาการพิมพ์ในช่องนี้เท่านั้น เก็บเฉพาะตัวเลขจังหวะ ไม่เก็บข้อความ และคำนวณในเครื่องของคุณ</p>
+      <label class="lbl"><input type="checkbox" id="tyOn">ฉันยินยอมให้จับจังหวะการพิมพ์ในช่องนี้</label>
+      <textarea id="tyBox" disabled placeholder="ติ๊กยินยอมก่อน แล้วพิมพ์อะไรก็ได้ เช่น วันนี้เป็นยังไงบ้าง (พิมพ์เอง อย่างน้อย 30 ตัวอักษร)" aria-label="ช่องพิมพ์เพื่อวัดจังหวะ"></textarea>
+      <p class="mute" id="tyInfo"></p>
+    </details>
+    <button class="btn" id="saveBtn" type="button">บันทึกวันนี้</button>
+    <p id="status" role="status"></p>
+  </section>
+
+  <div id="signal" aria-live="polite"></div>
+  <h2>14 วันล่าสุด</h2>
+  <div class="chart" id="chart"></div>
+  <div class="legend"><span><i style="background:var(--sleep)"></i>ชั่วโมงนอน</span><span><i style="background:var(--mood)"></i>อารมณ์ (1–5)</span></div>
+
+  <h2>ความสัมพันธ์ที่พบในข้อมูลของคุณ</h2>
+  <div id="insights"></div>
+  <div id="tyIns"></div>
+
+  <h2>ลิ้นชักความรู้</h2>
+  <details class="drawer">
+    <summary>🗝️ เรื่องโรคที่เกี่ยวกับใจและกาย (เปิดเมื่ออยากรู้)</summary>
+    <p class="mute">ข้อมูลทั่วไปเพื่อความรู้ ไม่ได้บอกว่าคุณเป็นโรคใด</p>
+    <details><summary>ความเครียดสะสม</summary><p>ร่างกายตื่นตัวเพื่อรับมือแรงกดดัน ถ้าเกิดต่อเนื่องจะเหนื่อยล้า สัญญาณที่พบบ่อยคือหงุดหงิดง่าย นอนหลับยาก ปวดหัว ใจสั่น ในงานวิจัย HRV ที่ลดลงและชีพจรขณะพักที่สูงขึ้นสัมพันธ์กับความเครียด เริ่มจากจัดเวลานอน พักเป็นช่วง และหายใจช้าๆ ถ้าเป็นต่อเนื่องเกิน 2 สัปดาห์ ควรปรึกษาครูแนะแนวหรือแพทย์</p></details>
+    <details><summary>ความวิตกกังวล</summary><p>กังวลมากเกินเหตุจนควบคุมยาก อาจมีใจสั่น มือเย็น ตัวสั่น นอนไม่หลับ หรือหลีกเลี่ยงสิ่งที่กลัว งานวิจัยรายงานว่า HRV ที่ต่ำสัมพันธ์กับอาการวิตกกังวลที่มากขึ้น ถ้ากระทบการเรียนหรือชีวิตประจำวัน ควรปรึกษาผู้เชี่ยวชาญ</p></details>
+    <details><summary>ภาวะซึมเศร้า</summary><p>ต่างจากความเศร้าชั่วคราว คือเศร้าหรือเบื่อจนไม่สนุกกับสิ่งที่เคยชอบเกือบทุกวัน ต่อเนื่องอย่างน้อย 2 สัปดาห์ มักมีการนอนหรือการกินเปลี่ยนไป เหนื่อย สมาธิลดลง รู้สึกไร้ค่า ต้องให้แพทย์หรือนักจิตวิทยาประเมิน แอพนี้บอกไม่ได้ ถ้ามีความคิดอยากทำร้ายตัวเอง โทร 1323 ทันที หรือ 1669 กรณีฉุกเฉิน</p></details>
+    <details><summary>การนอนไม่พอ</summary><p>วัยรุ่นโดยทั่วไปควรนอนราว 8–10 ชั่วโมง การนอนน้อยสัมพันธ์กับอารมณ์ที่แย่ลง สมาธิและความจำที่ลดลง งานวิจัยบางชิ้นพบว่าข้อมูลการนอนช่วยทำนายอาการซึมเศร้าและวิตกกังวลได้เด่นที่สุด ถ้านอนไม่หลับต่อเนื่องหลายสัปดาห์ ควรปรึกษาแพทย์</p></details>
+  </details>
+
+  <h2>ข้อมูลของคุณ</h2>
+  <p class="mute">ข้อมูลเก็บในเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ถูกส่งไปที่ไหน</p>
+  <details>
+    <summary>ดูข้อมูลแบบ CSV (คัดลอกไปวิเคราะห์ต่อได้)</summary>
+    <textarea id="csv" readonly aria-label="ข้อมูลรูปแบบ CSV"></textarea>
+  </details>
+  <button class="btn ghost" id="simBtn" type="button">ใส่ข้อมูลจำลอง 14 วันเพื่อลองดู</button>
+  <button class="btn ghost" id="clrBtn" type="button">ล้างข้อมูลทั้งหมด</button>
+
+  <footer>
+    <p>ความสัมพันธ์ที่แสดงเป็นเพียงรูปแบบในข้อมูลของคุณ ไม่ได้บอกว่าอะไรเป็นสาเหตุ และไม่สามารถใช้บอกว่าเป็นโรคหรือไม่ หากรู้สึกแย่ต่อเนื่อง ควรพบแพทย์หรือนักจิตวิทยา</p>
+    <p><b>ต้นแบบเพื่อการศึกษา</b> ไม่ทดแทนการพบผู้เชี่ยวชาญ หากมีความคิดอยากทำร้ายตัวเอง โทร 1323 (สายด่วนสุขภาพจิต) หรือ 1669 กรณีฉุกเฉิน</p>
+    <p><b>ความเป็นส่วนตัว:</b> ข้อมูลที่คุณบันทึกเก็บในเบราว์เซอร์ของเครื่องนี้เท่านั้น ไม่ถูกส่งไปเซิร์ฟเวอร์ใด หน้านี้ไม่ตั้งคุกกี้เองและไม่มีระบบวิเคราะห์การใช้งาน แต่ฟอนต์โหลดจาก Google Fonts และผู้ให้บริการโฮสต์อาจเก็บบันทึกการเข้าถึงตามปกติ การล้างข้อมูลเบราว์เซอร์จะลบบันทึกทั้งหมด ฟีเจอร์จังหวะการพิมพ์ (ถ้าเปิด) เก็บเฉพาะตัวเลขจังหวะ ไม่เก็บข้อความที่พิมพ์</p>
+  </footer>
+</main>
+<script>
+(function(){
+var KEY='jaikai.v1';
+var MOOD=['แย่มาก','ไม่ค่อยดี','เฉยๆ','ดี','ดีมาก'];
+var STRESS=['สงบ','เล็กน้อย','ปานกลาง','มาก','มากที่สุด'];
+var S={mood:null,stress:null};
+var armed=false;
+function $(s){return document.querySelector(s)}
+function load(){try{var v=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}}
+var data=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){note('บันทึกในเบราว์เซอร์นี้ไม่ได้ ข้อมูลจะหายเมื่อปิดหน้า')}}
+function note(t){$('#status').textContent=t}
+function today(){return new Date().toLocaleDateString('en-CA')}
+function fmt(h){return Number(h).toFixed(1).replace('.0','')+' ชม.'}
+function avg(a){return a.reduce(function(x,y){return x+y},0)/a.length}
+function sorted(){return data.slice().sort(function(a,b){return a.date<b.date?-1:1})}
+
+function buildSeg(id,labels,icons){
+  var box=$('#'+id);
+  labels.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.type='button';b.setAttribute('aria-pressed','false');
+    b.innerHTML='<b>'+icons[i]+'</b><small>'+t+'</small>';
+    b.addEventListener('click',function(){pick(id,i+1)});
+    box.appendChild(b);
+  });
+}
+function pick(id,v){
+  S[id]=v;
+  var bs=$('#'+id).children;
+  for(var i=0;i<bs.length;i++)bs[i].setAttribute('aria-pressed',String(i+1===v));
+}
+function fill(){
+  var d=$('#date').value;
+  var e=data.filter(function(x){return x.date===d})[0];
+  $('#sleep').value=e?e.sleep:7;
+  $('#sleepOut').textContent='· '+fmt($('#sleep').value);
+  pick('mood',e?e.mood:null);
+  pick('stress',e?e.stress:null);
+  $('#rhr').value=e&&e.rhr!=null?e.rhr:'';
+  $('#hrv').value=e&&e.hrv!=null?e.hrv:'';
+}
+function num(id){var v=$(id).value;return v===''?null:Number(v)}
+
+function pearson(a,b){
+  var n=a.length;if(n<7)return null;
+  var ma=avg(a),mb=avg(b),s=0,x=0,y=0;
+  for(var i=0;i<n;i++){var da=a[i]-ma,db=b[i]-mb;s+=da*db;x+=da*da;y+=db*db}
+  return(x&&y)?s/Math.sqrt(x*y):null;
+}
+function strength(r){var a=Math.abs(r);return a<0.3?'อ่อน':a<0.6?'ปานกลาง':'ค่อนข้างชัด'}
+
+function render(){
+  var d=sorted(),n=d.length;
+  chart(d.slice(-14));signal(d);typIns(d);
+  insights(d);
+  care(d);
+  var rows=['date,sleep_h,mood,stress,rhr,hrv_rmssd,simulated,typ_cpm,typ_cv,typ_bs,typ_pz'];
+  d.forEach(function(e){rows.push([e.date,e.sleep,e.mood,e.stress,e.rhr==null?'':e.rhr,e.hrv==null?'':e.hrv,e.sim?1:0].concat(e.typ?[e.typ.cpm,e.typ.cv,e.typ.bs,e.typ.pz]:['','','','']).join(','))});
+  $('#csv').value=rows.join('\n');
+}
+
+function chart(d){
+  var box=$('#chart');
+  if(!d.length){box.innerHTML='<p class="mute">ยังไม่มีข้อมูล บันทึกวันแรกด้านบน หรือกดใส่ข้อมูลจำลองเพื่อลองดู</p>';return}
+  var W=560,H=220,l=30,r=8,t=12,b=28,pw=W-l-r,ph=H-t-b,step=pw/d.length,bw=Math.min(26,step*0.6);
+  var g='',i;
+  [0,6,12].forEach(function(h){var y=t+ph-h/12*ph;g+='<line class="grid" x1="'+l+'" x2="'+(W-r)+'" y1="'+y+'" y2="'+y+'"/><text class="ax" x="'+(l-6)+'" y="'+(y+4)+'" text-anchor="end">'+h+'</text>'});
+  var pts=[];
+  d.forEach(function(e,k){
+    var cx=l+(k+0.5)*step,bh=Math.min(e.sleep,12)/12*ph,my=t+ph-(e.mood-1)/4*ph;
+    g+='<rect class="bar" x="'+(cx-bw/2)+'" y="'+(t+ph-bh)+'" width="'+bw+'" height="'+bh+'" rx="3"/>';
+    g+='<text class="ax" x="'+cx+'" y="'+(H-9)+'" text-anchor="middle">'+Number(e.date.slice(8))+'</text>';
+    pts.push([cx,my]);
+  });
+  g+='<polyline class="ln" points="'+pts.map(function(p){return p[0]+','+p[1]}).join(' ')+'"/>';
+  pts.forEach(function(p){g+='<circle class="dot" cx="'+p[0]+'" cy="'+p[1]+'" r="5"/>'});
+  box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="กราฟชั่วโมงนอนเป็นแท่ง และอารมณ์เป็นเส้น ย้อนหลัง '+d.length+' วัน">'+g+'</svg>';
+}
+
+function insights(d){
+  var box=$('#insights'),out=[];
+  if(d.length<7){
+    box.innerHTML='<p class="mute">ต้องมีข้อมูลอย่างน้อย 7 วันจึงจะคำนวณความสัมพันธ์ได้ ตอนนี้มี '+d.length+' วัน</p>';return;
+  }
+  var a=d.map(function(e){return e.sleep}),m=d.map(function(e){return e.mood});
+  var r1=pearson(a,m);
+  if(r1!=null)out.push(['การนอนกับอารมณ์วันเดียวกัน',r1,d.length,r1>0?'วันที่นอนมากขึ้น อารมณ์มักดีขึ้น':'วันที่นอนมากขึ้น อารมณ์มักต่ำลง']);
+  var x=[],y=[];
+  for(var i=0;i<d.length-1;i++){
+    if((new Date(d[i+1].date)-new Date(d[i].date))/864e5===1){x.push(d[i].sleep);y.push(d[i+1].mood)}
+  }
+  var r2=pearson(x,y);
+  if(r2!=null)out.push(['การนอนคืนนี้กับอารมณ์วันถัดไป',r2,x.length,r2>0?'คืนที่นอนมากขึ้น วันรุ่งขึ้นอารมณ์มักดีขึ้น':'คืนที่นอนมากขึ้น วันรุ่งขึ้นอารมณ์มักต่ำลง']);
+  var h=[],s=[];
+  d.forEach(function(e){if(e.hrv!=null){h.push(e.hrv);s.push(e.stress)}});
+  var r3=pearson(h,s);
+  if(r3!=null)out.push(['HRV กับความเครียด',r3,h.length,r3<0?'วันที่ HRV สูง ความเครียดมักต่ำ (ทิศทางเดียวกับที่งานวิจัยส่วนใหญ่รายงาน)':'วันที่ HRV สูง ความเครียดมักสูงด้วย (ต่างจากที่งานวิจัยส่วนใหญ่รายงาน ลองบันทึกต่อ)']);
+  if(!out.length){box.innerHTML='<p class="mute">ยังมีข้อมูลไม่พอสำหรับคู่ตัวแปรที่คำนวณได้ ลองบันทึกต่อเนื่องหลายวัน</p>';return}
+  box.innerHTML=out.map(function(o){
+    return '<div class="insight"><b>'+o[0]+'</b><br>'+o[3]+'<br><span class="mute">ความสัมพันธ์'+strength(o[1])+' (r = '+o[1].toFixed(2)+', n = '+o[2]+')</span></div>';
+  }).join('')+'<p class="mute">ข้อมูลน้อยกว่า 30 วันยังไม่น่าเชื่อถือพอ ใช้ดูแนวโน้มเบื้องต้นเท่านั้น</p>';
+}
+
+function signal(d){
+  var box=$('#signal');
+  if(d.length<3){box.innerHTML='<div class="sig"><b>สัญญาณจากข้อมูลของคุณ</b><p class="mute">บันทึกอีก '+(3-d.length)+' วันเพื่อดูสัญญาณ</p></div>';return}
+  var w=d.slice(-7),f=[];
+  var sl=avg(w.map(function(e){return e.sleep})),mo=avg(w.map(function(e){return e.mood})),st=avg(w.map(function(e){return e.stress}));
+  if(sl<6)f.push('นอนเฉลี่ย '+sl.toFixed(1)+' ชม. ต่อคืน ต่ำกว่า 6 ชม.');
+  if(mo<=2.5)f.push('อารมณ์เฉลี่ยต่ำ ('+mo.toFixed(1)+' จาก 5)');
+  if(st>=4)f.push('ความเครียดเฉลี่ยสูง ('+st.toFixed(1)+' จาก 5)');
+  var hv=d.filter(function(e){return e.hrv!=null});
+  if(hv.length>=6){var rc=avg(hv.slice(-3).map(function(e){return e.hrv})),bs=avg(hv.slice(0,-3).map(function(e){return e.hrv}));if(rc<bs*0.8)f.push('HRV 3 วันล่าสุดต่ำกว่าค่าปกติของคุณมากกว่า 20%')}
+  var streak=d.slice(-3).every(function(e){return e.mood<=2});
+  if(streak)f.push('อารมณ์ต่ำ 3 วันติดต่อกัน');
+  var lvl=(f.length>=3||streak)?3:(f.length===2?2:1);
+  var T=['สัญญาณโดยรวมยังสงบ','มีสัญญาณที่ควรสังเกต','สัญญาณเตือนหลายอย่างพร้อมกัน'];
+  var D=['ยังไม่พบรูปแบบที่น่ากังวลในข้อมูลล่าสุด รักษาจังหวะนี้ไว้','ลองปรับเวลานอน พักจากสิ่งที่กดดัน แล้วดูว่าสัญญาณดีขึ้นใน 2–3 วันไหม','ควรคุยกับคนที่ไว้ใจ ครู หรือผู้เชี่ยวชาญ สายด่วนสุขภาพจิต 1323 พร้อมรับฟัง'];
+  box.innerHTML='<div class="sig lv'+lvl+'"><div class="meter" aria-hidden="true"><i></i><i></i><i></i></div><b>'+T[lvl-1]+'</b><p>'+D[lvl-1]+'</p>'+(f.length?'<ul>'+f.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'')+'<p class="mute">คำนวณจากข้อมูล '+w.length+' วันล่าสุดที่คุณบันทึก เป็นเพียงสัญญาณ ไม่ใช่การวินิจฉัยหรือการบอกว่าเป็นโรคใด</p></div>';
+}
+
+var ty={on:false,t:[],del:0,ins:0};
+function tyReset(){ty.t=[];ty.del=0;ty.ins=0}
+$('#tyOn').addEventListener('change',function(){
+  ty.on=this.checked;$('#tyBox').disabled=!this.checked;
+  if(!this.checked){$('#tyBox').value='';tyReset();$('#tyInfo').textContent=''}
+});
+$('#tyBox').addEventListener('input',function(e){
+  var k=e.inputType||'';
+  if(k==='insertFromPaste')return;
+  if(k.indexOf('delete')===0)ty.del++;
+  else if(k.indexOf('insert')===0){ty.ins++;ty.t.push(performance.now())}
+  $('#tyInfo').textContent='จับได้ '+ty.ins+' ตัวอักษร'+(ty.ins<30?' (แนะนำอย่างน้อย 30)':'');
+});
+function tyFeat(){
+  if(!ty.on||ty.t.length<20)return null;
+  var iv=[],i;
+  for(i=1;i<ty.t.length;i++)iv.push(ty.t[i]-ty.t[i-1]);
+  var fl=iv.filter(function(x){return x<2000}),pa=iv.length-fl.length;
+  if(fl.length<10)return null;
+  var m=avg(fl),s=Math.sqrt(avg(fl.map(function(x){return (x-m)*(x-m)})));
+  return {n:ty.ins,iki:Math.round(m),cv:+(s/m).toFixed(2),bs:+(ty.del/(ty.ins+ty.del)).toFixed(2),pz:+(pa/ty.ins*100).toFixed(1),cpm:Math.round(60000/m)};
+}
+function simTyp(st,R){var k=Math.round(220+st*18+R()*30);return {n:60,iki:k,cv:+(0.45+st*0.05+R()*0.1).toFixed(2),bs:+(0.04+st*0.012+R()*0.03).toFixed(2),pz:+(1+st*0.5+R()*1.5).toFixed(1),cpm:Math.round(60000/k)}}
+var TF=[['cpm','ความเร็วพิมพ์'],['cv','ความไม่สม่ำเสมอของจังหวะ'],['bs','สัดส่วนการลบตัวอักษร'],['pz','การหยุดคิด']];
+function sdev(a){var m=avg(a);return Math.sqrt(avg(a.map(function(x){return (x-m)*(x-m)})))}
+function typIns(d){
+  var box=$('#tyIns'),t=d.filter(function(e){return e.typ});
+  if(!t.length){box.innerHTML='';return}
+  var h='<h2>จังหวะการพิมพ์ (ทดลอง)</h2>';
+  if(t.length<7){box.innerHTML=h+'<p class="mute">มีข้อมูลการพิมพ์ '+t.length+' วัน ต้องมีอย่างน้อย 7 วันแอพจึงเริ่มเรียนรู้รูปแบบของคุณได้</p>';return}
+  var st=t.map(function(e){return e.stress}),rs=[];
+  TF.forEach(function(f){var r=pearson(t.map(function(e){return e.typ[f[0]]}),st);if(r!=null)rs.push([f[1],r])});
+  rs.sort(function(a,b){return Math.abs(b[1])-Math.abs(a[1])});
+  h+=rs.slice(0,2).map(function(x){return '<div class="insight"><b>'+x[0]+'</b> กับความเครียด<br><span class="mute">ความสัมพันธ์'+strength(x[1])+' (r = '+x[1].toFixed(2)+', n = '+t.length+')</span></div>'}).join('');
+  var last=d[d.length-1];
+  if(last.typ){
+    var base=t.slice(0,-1),dv=[];
+    TF.forEach(function(f){var a=base.map(function(e){return e.typ[f[0]]}),s=sdev(a);if(s>0){var z=(last.typ[f[0]]-avg(a))/s;if(Math.abs(z)>=1.5)dv.push(f[1]+(z>0?'สูงกว่า':'ต่ำกว่า')+'ปกติของคุณ')}});
+    h+=dv.length?'<p>วันนี้: '+dv.join(', ')+'</p>':'<p class="mute">จังหวะการพิมพ์วันนี้อยู่ในช่วงปกติของคุณ</p>';
+  }
+  h+='<p class="mute">เป็นสถิติเบื้องต้นจากข้อมูลของคุณเอง คำนวณในเครื่อง ยังไม่ใช่โมเดล AI ที่ผ่านการตรวจสอบ ไม่นับรวมในระดับสัญญาณ และไม่ใช่การวินิจฉัย'+(d.some(function(e){return e.sim})?' มีข้อมูลจำลองปนอยู่ ผลนี้ใช้สาธิตเท่านั้น':'')+'</p>';
+  box.innerHTML=h;
+}
+
+function care(d){
+  var el=$('#care');
+  if(!d.length){el.hidden=true;return}
+  var last=d[d.length-1],l3=d.slice(-3);
+  el.hidden=!(last.mood===1||(l3.length===3&&avg(l3.map(function(e){return e.mood}))<=2));
+}
+
+function rnd(seed){return function(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296}}
+function clamp(v){return Math.max(1,Math.min(5,Math.round(v)))}
+function simulate(){
+  var R=rnd(7),have={};
+  data.forEach(function(e){have[e.date]=1});
+  for(var i=13;i>=0;i--){
+    var dt=new Date();dt.setDate(dt.getDate()-i);
+    var ds=dt.toLocaleDateString('en-CA');
+    if(have[ds])continue;
+    var sl=Math.round((5+R()*3.5)*2)/2;
+    data.push({date:ds,sleep:sl,mood:clamp(1.5+(sl-5)*0.6+R()*1.6),stress:clamp(4.2-(sl-5)*0.5+R()),rhr:Math.round(70-(sl-5)*1.2+R()*4),hrv:Math.round(28+(sl-5)*5+R()*10),sim:true});var q=data[data.length-1];q.typ=simTyp(q.stress,R);
+  }
+  save();render();fill();note('ใส่ข้อมูลจำลองแล้ว (ไม่ใช่ข้อมูลจริง ล้างได้ทุกเมื่อ)');
+}
+
+$('#saveBtn').addEventListener('click',function(){
+  if(!S.mood||!S.stress){note('เลือกอารมณ์และความเครียดก่อนบันทึก');return}
+  var d=$('#date').value;if(!d){note('เลือกวันที่ก่อนบันทึก');return}
+  var pv=data.filter(function(e){return e.date===d})[0];data=data.filter(function(e){return e.date!==d});
+  data.push({date:d,sleep:Number($('#sleep').value),mood:S.mood,stress:S.stress,rhr:num('#rhr'),hrv:num('#hrv'),typ:tyFeat()||(pv&&pv.typ)||null});tyReset();$('#tyBox').value='';$('#tyInfo').textContent='';
+  save();render();note('บันทึกแล้ว ดูสัญญาณของคุณด้านล่าง');var sg=$('#signal');if(sg.scrollIntoView)sg.scrollIntoView({block:'nearest'});
+});
+$('#sleep').addEventListener('input',function(){$('#sleepOut').textContent='· '+fmt(this.value)});
+$('#date').addEventListener('change',fill);
+$('#simBtn').addEventListener('click',simulate);
+$('#clrBtn').addEventListener('click',function(){
+  var b=this;
+  if(!armed){armed=true;b.textContent='กดอีกครั้งเพื่อยืนยันการล้างข้อมูล';setTimeout(function(){armed=false;b.textContent='ล้างข้อมูลทั้งหมด'},4000);return}
+  armed=false;data=[];save();render();fill();b.textContent='ล้างข้อมูลทั้งหมด';note('ล้างข้อมูลแล้ว');
+});
+
+buildSeg('mood',MOOD,['😞','🙁','😐','🙂','😄']);buildSeg('stress',STRESS,['😌','🙂','😬','😣','🤯']);
+$('#date').value=today();
+fill();render();
+})();
+</script>
+</body>
+</html>
